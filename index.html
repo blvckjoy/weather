@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather App</h1>
+      <form action="#">
+        <input
+          type="text"
+          id="location-input"
+          name="location-input"
+          placeholder="Enter city name"
+        />
+        <button type="button" id="search-btn">Search</button>
+      </form>
+
+      <div class="weather-content hidden">
+        <p class="weather-city">New York City</p>
+        <p class="weather-date">Thu, 5 October</p>
+        <img class="weather-icon" src="assets/rain.png" alt="rain icon" />
+        <p class="weather-degrees">20ºC</p>
+        <p class="weather-condition">Cloudy</p>
+
+        <div class="daily-forecast">
+          <div class="days day-1">
+            <p class="forecast-date">30/10</p>
+            <p class="forecast-day">Wed</p>
+          </div>
+          <div class="days day-2">
+            <p class="forecast-date">31/10</p>
+            <p class="forecast-day">Thu</p>
+          </div>
+          <div class="days day-3">
+            <p class="forecast-date">01/11</p>
+            <p class="forecast-day">Fri</p>
+          </div>
+          <div class="days day-4">
+            <p class="forecast-date">02/11</p>
+            <p class="forecast-day">Sat</p>
+          </div>
+          <div class="days day-5">
+            <p class="forecast-date">02/11</p>
+            <p class="forecast-day">Sun</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
