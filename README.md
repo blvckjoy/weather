@@ -6,9 +6,10 @@ This is a simple weather application that fetches weather data based on user inp
 
 ## Features
 
--   Input a city name to get the current weather.
--   Displays the city name, current date, weather conditions, temperature, and an icon representing the weather.
--   Handles invalid input gracefully by prompting the user to enter a valid city.
+-   Fetch current weather data and forecasts for the next few days.
+-   Input validation to ensure a city name is provided.
+-   Dynamic updates to the UI based on the fetched weather data.
+-   Displays weather conditions, temperature, and forecast icons.
 
 ## Technologies Used
 
