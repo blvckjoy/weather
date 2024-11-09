@@ -3,33 +3,56 @@ const api_key = '6JYBGTDA52B8ZTHA55TE7MABF';
 
 // Function to get weather data for a specified city
 async function getWeather() {
+    const city = getInputValue();
+    if (city) {
+        showLoading();
+    }
     try {
-        const city = getInputValue();
         if (!validateInput(city)) {
             // Hide weather content if input is invalid
             hideWeatherContent();
             return;
         }
-
         const data = await fetchWeatherData(city);
         if (data && data.days) {
             getForecasts(data);
             // Update the UI with weather data
             updateWeatherData(data);
             showWeatherContent();
+            addFadeIn();
+
+            setTimeout(() => removeFadeIn, 750);
         } else {
             console.error('No weather data found for the specified city.');
             hideWeatherContent();
         }
     } catch (error) {
         console.error('Error fetching weather data:', error);
+        // hideLoading();
         hideWeatherContent();
+    } finally {
+        hideLoading();
     }
 }
 
 async function fetchWeatherData(city) {
-    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${api_key}`;
-    return await fetchData(url);
+    try {
+        const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${api_key}`;
+        return await fetchData(url);
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        throw error;
+    }
+}
+
+// Function to hide the loading component in the UI
+function hideLoading() {
+    document.querySelector('.loader').classList.add('hidden');
+}
+
+// Function to show the loading component in the UI
+function showLoading() {
+    document.querySelector('.loader').classList.remove('hidden');
 }
 
 // Function to hide the weather content in the UI
@@ -40,6 +63,14 @@ function hideWeatherContent() {
 // Function to show the weather content in the UI
 function showWeatherContent() {
     document.querySelector('.weather-content').classList.remove('hidden');
+}
+
+function addFadeIn() {
+    document.querySelector('.weather-content').classList.add('fade-in');
+}
+
+function removeFadeIn() {
+    document.querySelector('.weather-content').classList.remove('fade-in');
 }
 
 // Function to fetch data from a given URL
@@ -59,7 +90,7 @@ function getInputValue() {
 // Function to validate the input city name
 function validateInput(city) {
     if (!city) {
-        console.log('Please enter a city');
+        alert('Please enter a city');
         return false;
     }
     return true;
@@ -79,8 +110,11 @@ function getCurrentDate() {
 const forecastContainer = document.querySelector('.forecast-items');
 // Function to get forecasts for the upcoming days
 function getForecasts(data) {
-    // Format and split it to get only the date part
-    const todayDate = new Date().toISOString().split('T')[0];
+    const todayDate = new Date();
+    // Add one hour to it to convert to UTC+1
+    const utcPlus1 = new Date(todayDate.getTime() + 1 * 60 * 60 * 1000);
+    // Extract only the date, month and year
+    const formattedDate = utcPlus1.toISOString().split('T')[0];
     // Counter for the number of forecast items
     let count = 0;
 
@@ -89,7 +123,7 @@ function getForecasts(data) {
         // Convert day.datetime to a Date object for comparison
         const dayDate = new Date(day.datetime);
         // Check if count is less than 5
-        if (dayDate > new Date(todayDate) && count < 5) {
+        if (dayDate > new Date(formattedDate) && count < 5) {
             updateForecastItems(day);
             count++;
         }
@@ -99,12 +133,12 @@ function getForecasts(data) {
 // Function to update the forecast items in the UI
 function updateForecastItems(forecast) {
     const { datetime: date, icon, temp } = forecast;
-
     // Create a date object
     const dateTaken = new Date(date);
     const dateOption = {
-        day: '2-digit',
+        weekday: 'short',
         month: 'short',
+        day: '2-digit',
     };
 
     const dateOutput = dateTaken.toLocaleDateString('en-GB', dateOption);
