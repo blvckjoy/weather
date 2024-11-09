@@ -6,8 +6,9 @@ This is a simple weather application that fetches weather data based on user inp
 
 ## Features
 
--   Fetch current weather data and forecasts for the next few days.
 -   Input validation to ensure a city name is provided.
+-   Fetch current weather data and forecasts for the next few days.
+-   Displays loading animations while fetching data.
 -   Dynamic updates to the UI based on the fetched weather data.
 -   Displays weather conditions, temperature, and forecast icons.
 
@@ -16,4 +17,4 @@ This is a simple weather application that fetches weather data based on user inp
 -   HTML
 -   CSS
 -   JavaScript
--   Fetch API
+-   Visual Crossing Weather API
